@@ -2,9 +2,10 @@ package br.com.alura.leilao.login;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import br.com.alura.leilao.lances.LancesPage;
 
 public class LoginTeste {
 
@@ -23,32 +24,31 @@ public class LoginTeste {
 	
 	@Test
 	public void deveriaEfetuarLoginComDadosValidos() {
-		paginaDeLogin.prencheFormularioDeLogin("fulano", "pass");
+		paginaDeLogin.preencherFormularioDeLogin("fulano", "pass");
 		paginaDeLogin.efetuarLogin();
 		
-		Assert.assertFalse(paginaDeLogin.isPaginaDeLogin());
 		Assert.assertEquals("fulano", paginaDeLogin.getNomeUsuarioLogado());
-
+		Assert.assertFalse(paginaDeLogin.isPaginaDeLogin());
 	}
 
 	@Test
 	public void naoDeveriaLogarComDadosInvalidos() {
 
-		paginaDeLogin.prencheFormularioDeLogin("invalido", "123");
+		paginaDeLogin.preencherFormularioDeLogin("invalido", "123");
 		paginaDeLogin.efetuarLogin();
 
+		Assert.assertNull(paginaDeLogin.getNomeUsuarioLogado());
 		Assert.assertTrue(paginaDeLogin.isPaginaDeLoginComDadosInvalidos());
-		Assert.assertNull("fulano", paginaDeLogin.getNomeUsuarioLogado());
-
+		Assert.assertTrue(paginaDeLogin.isMensagemDeLoginInvalidoVisivel());
 	}
 
 	@Test
-	public void naoDeveriaEstarAcessarPaginaRestritaSemEstarLogado() {
+	public void naoDeveriaAcessarUrlRestritaSemEstarLogado() {
+		
 		paginaDeLogin.navegaParaPaginaDeLances();
 
-		Assert.assertTrue(paginaDeLogin.isPaginaDeLogin());
+		Assert.assertTrue(paginaDeLogin.isPaginaAtual());
 		Assert.assertFalse(paginaDeLogin.contemTexto("Dados do Leilão"));
-
 	}
 
 }
