@@ -1,2 +1,3 @@
 # TesteIntegracao
-Curso de testes de integração da classe DAO do projeto da Alura
+Curso de testes de integração da classe DAO do projeto da Alura.
+Leia o Issues.
